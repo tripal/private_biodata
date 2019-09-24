@@ -1,0 +1,5 @@
+name = Private Tripal Content
+description = Provides a way to keep individual Tripal content (e.g. a single project) private.
+core = 7.x
+package = Tripal Extensions
+dependencies[] = tripal
