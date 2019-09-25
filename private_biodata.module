@@ -3,3 +3,42 @@
  * @file
  * The main functionality for the module.
  */
+
+ /**
+  * Implements hook_permission().
+  */
+ function private_biodata_permission() {
+   $permissions = [];
+
+   // Add 'View Private' permissions for each content type.
+   $bundles = tripal_get_content_types();
+   foreach ($bundles as $bundle) {
+     $permissions['view public ' . $bundle->name] = array(
+       'title' => t('%label: View Public Content', array('%label' => $bundle->label)),
+       'description' => t('Allow the user to view public %label content. Content is indicated to be public using the "Public Tripal Content" field.', array('%label' => $bundle->label)),
+     );
+   }
+
+   return $permissions;
+ }
+
+ /**
+  * Implements hook_TripalEntity_access().
+  */
+ function private_biodata_TripalEntity_access($entity, $op, $account) {
+
+   // We only care about viewing.
+   if ($op == 'view') {
+
+     // We also only care if this entity is private...
+     // @todo check the entity for this, currently all entities will be
+     // considered public.
+     $is_public = TRUE;
+     if ($is_public) {
+
+       // Now, if it is public, ensure that the current user has the
+       // 'view public [bundle_name]' permission.
+       return user_access('view public ' . $entity->bundle, $account);
+     }
+   }
+ }
