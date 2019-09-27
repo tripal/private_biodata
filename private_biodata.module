@@ -30,6 +30,12 @@
    // We only care about viewing.
    if ($op == 'view') {
 
+     if (is_numeric($entity)) {
+       $entity_id = $entity;
+       $entity_results = entity_load('TripalEntity', [$entity_id]);
+       $entity = $entity_results[$entity_id];
+     }
+
      // We also only care if this entity is private...
      // @todo check the entity for this, currently all entities will be
      // considered public.
