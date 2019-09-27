@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/UofS-Pulse-Binfo/private_biodata.svg?branch=master)](https://travis-ci.org/UofS-Pulse-Binfo/private_biodata)
+![Tripal Dependency](https://img.shields.io/badge/tripal-%3E=3.0-brightgreen)
+![Version](https://img.shields.io/badge/version-DEVELOPMENT-yellow)
 
 # Private Tripal Content
 
