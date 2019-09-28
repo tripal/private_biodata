@@ -6,7 +6,7 @@
  * Data:
  * Assumptions:
  */
-class local__public_biodata extends ChadoField {
+class local__public_biodata extends TripalField {
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS
@@ -79,12 +79,6 @@ class local__public_biodata extends ChadoField {
     // should have auto_attach set to FALSE so tha their values can be
     // attached asynchronously.
     'auto_attach' => FALSE,
-    // The table in Chado that the instance maps to.
-    'chado_table' => '',
-    // The column of the table in Chado where the value of the field comes from.
-    'chado_column' => '',
-    // The base table.
-    'base_table' => '',
   );
 
   // A boolean specifying that users should not be allowed to create

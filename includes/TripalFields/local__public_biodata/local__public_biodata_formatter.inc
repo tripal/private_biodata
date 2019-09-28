@@ -6,7 +6,7 @@
  * Display:
  * Configuration:
  */
-class local__public_biodata_formatter extends ChadoFieldFormatter {
+class local__public_biodata_formatter extends TripalFieldFormatter {
 
   // The default label for this field.
   public static $default_label = 'Public Tripal Content';

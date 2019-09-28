@@ -7,7 +7,7 @@
  * Data:
  * Assumptions:
  */
-class local__public_biodata_widget extends ChadoFieldWidget {
+class local__public_biodata_widget extends TripalFieldWidget {
 
   // The default label for this field.
   public static $default_label = 'Public Tripal Content';
