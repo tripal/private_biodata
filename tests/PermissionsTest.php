@@ -66,6 +66,9 @@ class PermissionsTest extends TripalTestCase {
     $entity = $ec->create($values);
     $entity = $entity->save();
     $entity_id = $entity->id;
+    db_insert('private_biodata')->fields([
+      'entity_id' => $entity_id,
+      'public' => 1])->execute();
 
     $permission_name = "view public $bundle_name";
 

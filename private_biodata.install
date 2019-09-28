@@ -1,0 +1,29 @@
+<?php
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function private_biodata_schema() {
+  $schema = [];
+
+  $schema['private_biodata'] = [
+    'description' => t('Stores which tripal content should be publicly available and which should not be.'),
+    'fields' => [
+      'entity_id' => [
+        'description' => t('The primary identifier for the tripal content.'),
+        'type' => 'int',
+        'not null' => true,
+      ],
+      'public' => [
+        'description' => t('Indicates whether the content should be public.'),
+        'type' => 'int',
+        'not null' => true,
+      ],
+    ],
+  ];
+
+  return $schema;
+}
