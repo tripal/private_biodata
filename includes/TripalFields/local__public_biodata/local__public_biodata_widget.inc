@@ -7,7 +7,7 @@
  * Data:
  * Assumptions:
  */
-class local__public_biodata_widget extends TripalFieldWidget {
+class local__public_biodata_widget extends ChadoFieldWidget {
 
   // The default label for this field.
   public static $default_label = 'Public Tripal Content';
@@ -22,6 +22,19 @@ class local__public_biodata_widget extends TripalFieldWidget {
    */
   public function form(&$widget, &$form, &$form_state, $langcode, $items, $delta, $element) {
     parent::form($widget, $form, $form_state, $langcode, $items, $delta, $element);
+
+    dpm($this->instance, 'instance');
+
+    $title = ($this->instance['label']) ? $this->instance['label'] : 'Release Publicly';
+    $description = ($this->instance['description']) ? $this->instance['description'] : 'Check this box to release the current data page for access by anonymous users.';
+    $default_value = (isset($this->instance['default_value'])) ? $this->instance['default_value'][0]['is_public'] : FALSE;
+
+    $widget['is_public'] = [
+      '#type' => 'checkbox',
+      '#title' => $title,
+      '#description' => $description,
+      '#default_value' => $default_value,
+    ];
   }
 
   /**

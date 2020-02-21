@@ -40,8 +40,6 @@
      }
 
      // We also only care if this entity is private...
-     // @todo check the entity for this, currently all entities will be
-     // considered public.
      $is_public = db_query('SELECT public FROM {private_biodata}
        WHERE entity_id=:id',
        [':id' => $entity_id])->fetchField();

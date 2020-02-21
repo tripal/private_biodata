@@ -6,7 +6,7 @@
  * Data:
  * Assumptions:
  */
-class local__public_biodata extends TripalField {
+class local__public_biodata extends ChadoField {
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS
@@ -79,6 +79,9 @@ class local__public_biodata extends TripalField {
     // should have auto_attach set to FALSE so tha their values can be
     // attached asynchronously.
     'auto_attach' => FALSE,
+    'chado_table' => NULL,
+    'chado_column' => NULL,
+    'base_table' => NULL,
   );
 
   // A boolean specifying that users should not be allowed to create
@@ -98,11 +101,19 @@ class local__public_biodata extends TripalField {
    *
    */
   public function load($entity) {
-
     $field_name = $this->field['field_name'];
+
+    $entity_id = $entity->id;
+    $is_public = db_query('SELECT public FROM {private_biodata}
+      WHERE entity_id=:id',
+      [':id' => $entity_id])->fetchField();
+
+    $entity->{$field_name} = [];
     $entity->{$field_name}['und'][0] = [
-      'value' => TRUE,
+      'value' => $is_public,
+      'is_public' => $is_public,
     ];
+    dpm($entity->{$field_name}, 'field value');
   }
 
   /**
