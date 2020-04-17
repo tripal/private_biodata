@@ -3,6 +3,7 @@
  * @file
  * The main functionality for the module.
  */
+require_once('includes/TripalFields/private_biodata.fields.inc');
 
  /**
   * Implements hook_permission().

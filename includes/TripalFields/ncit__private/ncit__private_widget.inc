@@ -7,7 +7,7 @@
  * Data:
  * Assumptions:
  */
-class local__private_biodata_widget extends ChadoFieldWidget {
+class ncit__private_widget extends ChadoFieldWidget {
 
   // The default label for this field.
   public static $default_label = 'Private Tripal Content';
@@ -25,7 +25,7 @@ class local__private_biodata_widget extends ChadoFieldWidget {
 
     $title = ($this->instance['label']) ? $this->instance['label'] : 'Kepp Private';
     $description = ($this->instance['description']) ? $this->instance['description'] : 'Check this box to protect the current page to a specific set of priviledged users.';
-    $default_value = $items[0]['is_private'];
+    $default_value = (isset($items[0]['is_private'])) ? $items[0]['is_private'] : FALSE;
 
     $widget['is_private'] = [
       '#type' => 'checkbox',

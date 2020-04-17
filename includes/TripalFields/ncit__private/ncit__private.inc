@@ -6,7 +6,7 @@
  * Data:
  * Assumptions:
  */
-class local__private_biodata extends ChadoField {
+class ncit__private extends ChadoField {
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS

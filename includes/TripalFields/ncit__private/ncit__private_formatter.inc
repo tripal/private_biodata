@@ -6,7 +6,7 @@
  * Display:
  * Configuration:
  */
-class local__private_biodata_formatter extends ChadoFieldFormatter {
+class ncit__private_formatter extends ChadoFieldFormatter {
 
   // The default label for this field.
   public static $default_label = 'Private Tripal Content';
