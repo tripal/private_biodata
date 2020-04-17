@@ -13,9 +13,9 @@
    // Add 'View Private' permissions for each content type.
    $bundles = tripal_get_content_types();
    foreach ($bundles as $bundle) {
-     $permissions['view public ' . $bundle->name] = array(
-       'title' => t('%label: View Public Content', array('%label' => $bundle->label)),
-       'description' => t('Allow the user to view public %label content. Content is indicated to be public using the "Public Tripal Content" field.', array('%label' => $bundle->label)),
+     $permissions['view private ' . $bundle->name] = array(
+       'title' => t('%label: View Private Content', array('%label' => $bundle->label)),
+       'description' => t('Allow the user to view private %label content. Content is indicated to be private using the "Private Tripal Content" field.', array('%label' => $bundle->label)),
      );
    }
 
@@ -40,14 +40,20 @@
      }
 
      // We also only care if this entity is private...
-     $is_public = db_query('SELECT public FROM {private_biodata}
+     $is_private = db_query('SELECT private FROM {private_biodata}
        WHERE entity_id=:id',
        [':id' => $entity_id])->fetchField();
-     if ($is_public) {
 
-       // Now, if it is public, ensure that the current user has the
-       // 'view public [bundle_name]' permission.
-       return user_access('view public ' . $entity->bundle, $account);
+      // If we have it marked as private...
+     if ($is_private) {
+       // then return the custom permission provided by this module.
+       return user_access('view private ' . $entity->bundle, $account);
+     }
+     // Otherwise, this entity should follow the typical Tripal permissions.
+     else {
+       // Ensure that the current user has the
+       // 'view [bundle_name]' permission which was set-up by core Tripal.
+       return user_access('view ' . $entity->bundle, $account);
      }
    }
  }

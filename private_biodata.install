@@ -17,8 +17,8 @@ function private_biodata_schema() {
         'type' => 'int',
         'not null' => true,
       ],
-      'public' => [
-        'description' => t('Indicates whether the content should be public.'),
+      'private' => [
+        'description' => t('Indicates whether the content should be private.'),
         'type' => 'int',
         'not null' => true,
       ],

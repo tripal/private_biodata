@@ -22,7 +22,7 @@ class PermissionsTest extends TripalTestCase {
     $bundle_name = db_query('SELECT name FROM tripal_bundle limit 1')->fetchField();
 
     // First we want to check the permimssion added by this module is available.
-    $our_permission = 'view public ' . $bundle_name;
+    $our_permission = 'view private ' . $bundle_name;
     $this->assertArrayHasKey($our_permission, $permissions,
       "Our permission, $our_permission, was not available.");
 
@@ -68,9 +68,9 @@ class PermissionsTest extends TripalTestCase {
     $entity_id = $entity->id;
     db_insert('private_biodata')->fields([
       'entity_id' => $entity_id,
-      'public' => 1])->execute();
+      'private' => 1])->execute();
 
-    $permission_name = "view public $bundle_name";
+    $permission_name = "view private $bundle_name";
 
     // All permissions are assigned to users via roles...
     // Thus, create two new roles:
@@ -136,7 +136,7 @@ class PermissionsTest extends TripalTestCase {
     // Check that the user who should be able to access the content, can.
     $result = tripal_entity_access('view', $entity, $user_can);
     $this->assertTrue($result,
-      "The current user does not have permission to view the public entity.");
+      "The current user does not have permission to view the private entity.");
 
     // Check that the user who should NOT be able to access the content, can NOT.
     // Note we can only check if this permission is not given to the authenticated user.
@@ -147,7 +147,7 @@ class PermissionsTest extends TripalTestCase {
     if ($has_authenticated == FALSE) {
       $result = tripal_entity_access($op, $entity, $user_canNOT);
       $this->assertFalse($result,
-        "The current user does but shouldn't have permission to view the public entity.");
+        "The current user does but shouldn't have permission to view the private entity.");
     }
   }
 }
