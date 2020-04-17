@@ -113,7 +113,6 @@ class local__private_biodata extends ChadoField {
       'value' => $is_private,
       'is_private' => $is_private,
     ];
-    dpm($entity->{$field_name}, 'field value');
   }
 
   /**

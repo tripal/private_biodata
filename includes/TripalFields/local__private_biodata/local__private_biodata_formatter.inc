@@ -31,8 +31,14 @@ class local__private_biodata_formatter extends ChadoFieldFormatter {
    */
   public function view(&$element, $entity_type, $entity, $langcode, $items, $display) {
 
-    // Get the settings
-    $settings = $display['settings'];
+    // If this page is private then tell the user so they can change it if it shouldn't be.
+    if ((isset($items[0]['is_private'])) && ($items[0]['is_private'] == TRUE)) {
+      $element[0] = [
+        '#prefix' => '<div class="messages warning">',
+        '#markup' => 'The current page is PRIVATE. If this data has been published, please edit this page and uncheck the private setting.',
+        '#suffix' => '</div>',
+      ];
+    }
   }
 
   /**
