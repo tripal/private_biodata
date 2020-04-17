@@ -6,7 +6,7 @@
  * Data:
  * Assumptions:
  */
-class local__public_biodata extends ChadoField {
+class local__private_biodata extends ChadoField {
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS
@@ -17,16 +17,16 @@ class local__public_biodata extends ChadoField {
   // --------------------------------------------------------------------------
 
   // The default label for this field.
-  public static $default_label = 'Public Tripal Content';
+  public static $default_label = 'Private Tripal Content';
 
   // The default description for this field.
-  public static $default_description = 'Provides a simple checkbox to release data publicly.';
+  public static $default_description = 'Provides a simple checkbox to keep data private.';
 
   // The default widget for this field.
-  public static $default_widget = 'local__public_biodata_widget';
+  public static $default_widget = 'local__private_biodata_widget';
 
   // The default formatter for this field.
-  public static $default_formatter = 'local__public_biodata_formatter';
+  public static $default_formatter = 'local__private_biodata_formatter';
 
   // The module that manages this field.
   // If no module manages the field (IE it's added via libraries)
@@ -67,9 +67,9 @@ class local__public_biodata extends ChadoField {
     // The DATABASE name, as it appears in chado.db.  This also builds the link-out url.  In most cases this will simply be the CV name.  In some cases (EDAM) this will be the SUBONTOLOGY.
     'term_vocabulary' => 'local',
     // The name of the term.
-    'term_name' => 'public_biodata',
+    'term_name' => 'private_biodata',
     // The unique ID (i.e. accession) of the term.
-    'term_accession' => 'public_biodata',
+    'term_accession' => 'private_biodata',
     // Set to TRUE if the site admin is not allowed to change the term
     // type, otherwise the admin can change the term mapped to a field.
     'term_fixed' => FALSE,
@@ -104,14 +104,14 @@ class local__public_biodata extends ChadoField {
     $field_name = $this->field['field_name'];
 
     $entity_id = $entity->id;
-    $is_public = db_query('SELECT public FROM {private_biodata}
+    $is_private = db_query('SELECT private FROM {private_biodata}
       WHERE entity_id=:id',
       [':id' => $entity_id])->fetchField();
 
     $entity->{$field_name} = [];
     $entity->{$field_name}['und'][0] = [
-      'value' => $is_public,
-      'is_public' => $is_public,
+      'value' => $is_private,
+      'is_private' => $is_private,
     ];
     dpm($entity->{$field_name}, 'field value');
   }

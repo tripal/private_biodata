@@ -7,13 +7,13 @@
  * Data:
  * Assumptions:
  */
-class local__public_biodata_widget extends ChadoFieldWidget {
+class local__private_biodata_widget extends ChadoFieldWidget {
 
   // The default label for this field.
-  public static $default_label = 'Public Tripal Content';
+  public static $default_label = 'Private Tripal Content';
 
   // The list of field types for which this formatter is appropriate.
-  public static $field_types = array('local__public_biodata');
+  public static $field_types = array('local__private_biodata');
 
 
   /**
@@ -25,11 +25,11 @@ class local__public_biodata_widget extends ChadoFieldWidget {
 
     dpm($this->instance, 'instance');
 
-    $title = ($this->instance['label']) ? $this->instance['label'] : 'Release Publicly';
-    $description = ($this->instance['description']) ? $this->instance['description'] : 'Check this box to release the current data page for access by anonymous users.';
-    $default_value = (isset($this->instance['default_value'])) ? $this->instance['default_value'][0]['is_public'] : FALSE;
+    $title = ($this->instance['label']) ? $this->instance['label'] : 'Kepp Private';
+    $description = ($this->instance['description']) ? $this->instance['description'] : 'Check this box to protect the current page to a specific set of priviledged users.';
+    $default_value = (isset($this->instance['default_value'])) ? $this->instance['default_value'][0]['is_private'] : FALSE;
 
-    $widget['is_public'] = [
+    $widget['is_private'] = [
       '#type' => 'checkbox',
       '#title' => $title,
       '#description' => $description,

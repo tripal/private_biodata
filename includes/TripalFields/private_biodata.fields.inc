@@ -22,15 +22,15 @@ function private_biodata_bundle_fields_info($entity_type, $bundle) {
 
   // First add my term.
   tripal_insert_cvterm(array(
-    'id' => 'local:public_biodata',
-    'name' => 'public_biodata',
+    'id' => 'local:private_biodata',
+    'name' => 'private_biodata',
     'cv_name' => 'local',
-    'definition' => 'Provides a simple checkbox to release data publicly.',
+    'definition' => 'Provides a simple checkbox to keep data private.',
   ));
 
   // Then describe the field defined by that term.
-  $field_name = 'local__public_biodata';
-  $field_type = 'local__public_biodata';
+  $field_name = 'local__private_biodata';
+  $field_type = 'local__private_biodata';
   $fields[$field_name] = array(
     'field_name' => $field_name,
     'type' => $field_type,
@@ -57,32 +57,32 @@ function private_biodata_bundle_fields_info($entity_type, $bundle) {
 function private_biodata_bundle_instances_info($entity_type, $bundle) {
   $instances = array();
 
-  $field_name = 'local__public_biodata';
-  $field_type = 'local__public_biodata';
+  $field_name = 'local__private_biodata';
+  $field_type = 'local__private_biodata';
   $instances[$field_name] =  array(
     'field_name' => $field_name,
     'entity_type' => $entity_type,
     'bundle' => $bundle->name,
-    'label' => 'Public Tripal Content',
-    'description' => 'Provides a simple checkbox to release data publicly.',
+    'label' => 'private Tripal Content',
+    'description' => 'Provides a simple checkbox to keep data private.',
     'required' => FALSE,
     'settings' => array(
       'term_vocabulary' => 'local',
-      'term_name' => 'public_biodata',
-      'term_accession' => 'public_biodata',
+      'term_name' => 'private_biodata',
+      'term_accession' => 'private_biodata',
       'auto_attach' => FALSE,
       'chado_table' => NULL,
       'chado_column' => NULL,
       'base_table' => $bundle->data_table,
     ),
     'widget' => array(
-      'type' => 'local__public_biodata_widget',
+      'type' => 'local__private_biodata_widget',
       'settings' => array(),
     ),
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'type' => 'local__public_biodata_formatter',
+        'type' => 'local__private_biodata_formatter',
         'settings' => array(),
       ),
     ),
