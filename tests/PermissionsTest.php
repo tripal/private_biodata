@@ -3,7 +3,7 @@ namespace Tests;
 
 use StatonLab\TripalTestSuite\DBTransaction;
 use StatonLab\TripalTestSuite\TripalTestCase;
-use Faker\Factory;
+use StatonLab\TripalTestSuite\Database\Factory;
 
 class PermissionsTest extends TripalTestCase {
   // Uncomment to auto start and rollback db transactions per test method.
@@ -33,6 +33,66 @@ class PermissionsTest extends TripalTestCase {
   }
 
   /**
+   * Test private_biodata_TripalEntity_access().
+   */
+  public function testPrivateBiodataTripalEntityAccess() {
+    $faker = \Faker\Factory::create();
+
+    // -- CREATE THE ENTITY.
+    // All bundle names are bio_data_##. Content types are created on install
+    // of tripal_chado and thus all sites should have them available.
+    $bundle_id = db_query("SELECT bundle_id FROM chado_bundle WHERE data_table='pub'")->fetchField();
+    $bundle_name = 'bio_data_' . $bundle_id;
+    $bundle = tripal_load_bundle_entity(['name' => $bundle_name]);
+
+    $record = factory('chado.pub')->create();
+    $record_id = $record->pub_id;
+
+    $ec = entity_get_controller('TripalEntity');
+    $entity = $ec->create([
+      'bundle' => $bundle_name,
+      'term_id' => $bundle->term_id,
+      'chado_record' => chado_generate_var('pub', ['pub_id' => $record_id], ['include_fk' => 0]),
+      'chado_record_id' => $record_id,
+      'publish' => TRUE,
+      'bundle_object' => $bundle,
+    ]);
+
+    $entity = $entity->save($cache);
+    $this->assertIsObject($entity, "Unable to create a test entity.");
+
+    // -- CREATE USER WITH PERMISSIONS.
+    $permissions = ["view private $bundle_name", "view $bundle_name"];
+    $role_can = new \stdClass();
+    $role_can->name = $faker->name();
+    user_role_save($role_can);
+    user_role_grant_permissions($role_can->rid, $permissions);
+    $user_can = array(
+      'name' => $faker->name(),
+      'pass' => $faker->password(), // note: do not md5 the password
+      'mail' => $email,
+      'status' => 1,
+      'init' => $email,
+      'roles' => array(
+        DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+        $role_can->rid => $role_can->name,
+      ),
+    );
+    $user_can = user_save('', $user_can); // 1st param blank so new user is created.
+    $user_can_uid = $user_can->uid;
+
+    // -- TEST WITH ENTITY ID
+    $can_access = private_biodata_TripalEntity_access($entity->id, 'view', $user_can);
+    $this->assertTrue($can_access,
+      "Should be able to pass in the entity ID to confirm access.");
+
+    // -- TEST WITH ENTITY OBJECT
+    $can_access = private_biodata_TripalEntity_access($entity, 'view', $user_can);
+    $this->assertTrue($can_access,
+      "Should be able to pass in the entity ID to confirm access.");
+  }
+
+  /**
    * Test the permission for a given bundle.
    *
    * NOTE: We only test one bundle since it should be the same for all
@@ -41,7 +101,7 @@ class PermissionsTest extends TripalTestCase {
    * @group permissions
    */
   public function testPermissionsForUser() {
-    $faker = Factory::create();
+    $faker = \Faker\Factory::create();
 
     // Create organism entity for testing.
     $bundle_name = 'bio_data_2';
