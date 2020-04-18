@@ -27,5 +27,7 @@ The following steps show how to make one organism page private:
 ## Automated Testing
 
 [![Build Status](https://travis-ci.org/tripal/private_biodata.svg?branch=master)](https://travis-ci.org/tripal/private_biodata)
+[![Maintainability](https://api.codeclimate.com/v1/badges/863f047635eb2f712ab0/maintainability)](https://codeclimate.com/github/tripal/private_biodata/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/863f047635eb2f712ab0/test_coverage)](https://codeclimate.com/github/tripal/private_biodata/test_coverage)
 
 Automated testing for this module was implemented using [Tripal Test Suite]() and is run automatically using Travis CI. You can see the build status above.
