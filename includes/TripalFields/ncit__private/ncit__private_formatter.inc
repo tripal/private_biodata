@@ -31,8 +31,16 @@ class ncit__private_formatter extends ChadoFieldFormatter {
    */
   public function view(&$element, $entity_type, $entity, $langcode, $items, $display) {
 
-    // If this page is private then tell the user so they can change it if it shouldn't be.
+    // If this page is private then...
     if ((isset($items[0]['is_private'])) && ($items[0]['is_private'] == TRUE)) {
+
+      // Return access if the current user should not be able to see it.
+      $bundle_name = 'bio_data_1';
+      if (user_access('view private ' . $bundle_name) === FALSE) {
+        return drupal_access_denied();
+      }
+
+      // Otherwise, tell the user so they can change it if it shouldn't be.
       $element[0] = [
         '#prefix' => '<div class="messages warning">',
         '#markup' => 'The current page is PRIVATE. If this data has been published, please edit this page and uncheck the private setting.',
