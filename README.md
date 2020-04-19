@@ -33,6 +33,10 @@ The following steps show how to make one organism page private:
 
 **Note: Only pages where you have clicked "Keep Private" will have access changed by this module. All other pages follow the default Tripal core permissions.**
 
+Select Keep Private        |  View Page with Permission  | View Page without Permission
+:-------------------------:|:---------------------------:|:-----------------------------:
+![Field Widget](docs/images/ncit__private.widget.png) | ![Field Formatter with permission](docs/images/ncit__private.formatter.png) | ![Field Formatter without permission](docs/images/ncit__private.accessdenied.png)
+
 ## Automated Testing
 
 [![Build Status](https://travis-ci.org/tripal/private_biodata.svg?branch=master)](https://travis-ci.org/tripal/private_biodata)
