@@ -4,6 +4,19 @@
  */
 
 /**
+ * Implements hook_enable().
+ */
+function private_biodata_enable() {
+
+  // Add the NCIT:C54104 (Private) term to describe this field.
+  chado_insert_cvterm([
+    'id' => 'NCIT:C54104',
+    'name' => 'Private',
+    'definition' => 'Not public; kept secret or restricted.',
+    'cv_id' => ['name' => 'NCIT'],
+  ]);
+}
+/**
  * Implements hook_schema().
  */
 function private_biodata_schema() {
