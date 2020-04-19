@@ -35,7 +35,7 @@ class ncit__private_formatter extends ChadoFieldFormatter {
     if ((isset($items[0]['is_private'])) && ($items[0]['is_private'] == TRUE)) {
 
       // Return access if the current user should not be able to see it.
-      $bundle_name = 'bio_data_1';
+      $bundle_name = $this->instance['bundle'];
       if (user_access('view private ' . $bundle_name) === FALSE) {
         return drupal_access_denied();
       }
