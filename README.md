@@ -1,5 +1,6 @@
 ![Tripal Dependency](https://img.shields.io/badge/tripal-%3E=3.0-brightgreen)
-![Version](https://img.shields.io/badge/version-DEVELOPMENT-yellow)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/tripal/private_biodata)
+[![DOI](https://zenodo.org/badge/210686816.svg)](https://zenodo.org/badge/latestdoi/210686816)
 
 # Private Tripal Content
 
@@ -48,6 +49,6 @@ Automated testing for this module was implemented using [Tripal Test Suite]() an
 
 This work is supported by Saskatchewan Pulse Growers [grant: BRE1516, BRE0601], Western Grains Research Foundation, Genome Canada [grant: 8302, 16302], Government of Saskatchewan [grant: 20150331], and the University of Saskatchewan.
 
-## Citation
+## Citation [![DOI](https://zenodo.org/badge/210686816.svg)](https://zenodo.org/badge/latestdoi/210686816)
 
 Sanderson, L.A. (2020). Private BioData: Protecting biological data until published. Development Version. University of Saskatchewan, Pulse Crop Research Group, Saskatoon, SK, Canada.
