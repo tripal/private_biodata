@@ -23,10 +23,10 @@ class ncit__private extends ChadoField {
   public static $default_description = 'Provides a simple checkbox to keep data private.';
 
   // The default widget for this field.
-  public static $default_widget = 'local__private_biodata_widget';
+  public static $default_widget = 'ncit__private_widget';
 
   // The default formatter for this field.
-  public static $default_formatter = 'local__private_biodata_formatter';
+  public static $default_formatter = 'ncit__private_formatter';
 
   // The module that manages this field.
   // If no module manages the field (IE it's added via libraries)

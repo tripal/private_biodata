@@ -12,7 +12,7 @@ class ncit__private_formatter extends ChadoFieldFormatter {
   public static $default_label = 'Private Tripal Content';
 
   // The list of field types for which this formatter is appropriate.
-  public static $field_types = array('local__private_biodata');
+  public static $field_types = array('ncit__private');
 
   // The list of default settings for this formatter.
   public static $default_settings = array();

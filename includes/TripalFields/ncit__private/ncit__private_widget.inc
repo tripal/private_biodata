@@ -10,10 +10,10 @@
 class ncit__private_widget extends ChadoFieldWidget {
 
   // The default label for this field.
-  public static $default_label = 'Private Tripal Content';
+  public static $default_label = 'Keep Private';
 
   // The list of field types for which this formatter is appropriate.
-  public static $field_types = array('local__private_biodata');
+  public static $field_types = array('ncit__private');
 
 
   /**
@@ -27,11 +27,35 @@ class ncit__private_widget extends ChadoFieldWidget {
     $description = ($this->instance['description']) ? $this->instance['description'] : 'Check this box to protect the current page to a specific set of priviledged users.';
     $default_value = (isset($items[0]['is_private'])) ? $items[0]['is_private'] : FALSE;
 
+    $icon_path = drupal_get_path('module', 'private_biodata') . '/includes/TripalFields/ncit__private/iconfinder_102_111044.png';
+    $lock_img = theme('image', array('path' => $icon_path));
+
     $widget['is_private'] = [
       '#type' => 'checkbox',
       '#title' => $title,
       '#description' => $description,
       '#default_value' => $default_value,
+      '#prefix' => $lock_img,
+    ];
+
+    $widget['custom_css'] = [
+      '#type' => 'markup',
+      '#markup' => '<style>
+        .field-name-ncit--private {
+          border: 1px solid #ccc;
+          background-color: #F2F2F2;
+          padding: 25px;
+        }
+        .field-name-ncit--private label.option {
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+        .field-name-ncit--private img {
+          height: 45px;
+          float: left;
+          padding-right: 20px;
+        }
+      </style>',
     ];
   }
 
