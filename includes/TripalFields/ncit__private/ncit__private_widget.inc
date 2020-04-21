@@ -72,8 +72,18 @@ class ncit__private_widget extends ChadoFieldWidget {
    */
   public function submit($form, &$form_state, $entity_type, $entity, $langcode, $delta) {
     $field_name = $this->instance['field_name'];
-    $entity_id = $form_state['TripalEntity']->id;
     $private = $form_state['values'][$field_name][$langcode][0]['is_private'];
+
+    // If this is a new entity (i.e. on create)
+    // then we can't access the entity_id here...
+    if (isset($form_state['TripalEntity']->is_new) AND ($form_state['TripalEntity']->is_new)) {
+      // We cannot set this entity to private on create so let the user know.
+      if ($private) {
+        drupal_set_message('Cannot set the page to private before it exists. Please edit the page to set it to private.', 'warning');
+      }
+      return TRUE;
+    }
+    $entity_id = $form_state['TripalEntity']->id;
 
     // If the user set this page to be public, remove our record for it.
     if (!$private) {
