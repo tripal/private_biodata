@@ -43,7 +43,7 @@ Select Keep Private        |  View Page with Permission  | View Page without Per
 [![Build Status](https://travis-ci.org/tripal/private_biodata.svg?branch=master)](https://travis-ci.org/tripal/private_biodata)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/863f047635eb2f712ab0/test_coverage)](https://codeclimate.com/github/tripal/private_biodata/test_coverage)
 
-Automated testing for this module was implemented using [Tripal Test Suite]() and is run automatically using Travis CI. You can see the build status above.
+Automated testing for this module was implemented using [Tripal Test Suite](https://github.com/tripal/TripalTestSuite) and is run automatically using Travis CI. You can see the build status above.
 
 ## Funding
 
@@ -51,4 +51,4 @@ This work is supported by Saskatchewan Pulse Growers [grant: BRE1516, BRE0601], 
 
 ## Citation [![DOI](https://zenodo.org/badge/210686816.svg)](https://zenodo.org/badge/latestdoi/210686816)
 
-Sanderson, L.A. (2020). Private BioData: Protecting biological data until published. Development Version. University of Saskatchewan, Pulse Crop Research Group, Saskatoon, SK, Canada.
+Sanderson, L.A. (2020). Private BioData: Protecting biological data until published. Version 3.1. University of Saskatchewan, Pulse Crop Research Group, Saskatoon, SK, Canada. DOI: 10.5281/zenodo.3759770 
