@@ -5,10 +5,10 @@
  */
 require_once('includes/TripalFields/private_biodata.fields.inc');
 
- /**
-  * Implements hook_permission().
-  */
- function private_biodata_permission() {
+/**
+ * Implements hook_permission().
+ */
+function private_biodata_permission() {
    $permissions = [];
 
    // Add 'View Private' permissions for each content type.
@@ -23,38 +23,117 @@ require_once('includes/TripalFields/private_biodata.fields.inc');
    return $permissions;
  }
 
- /**
-  * Implements hook_TripalEntity_access().
-  */
- function private_biodata_TripalEntity_access($entity, $op, $account) {
+/**
+ * Implements hook_entity_info_alter().
+ */
+function private_biodata_entity_info_alter(&$entity_info) {
 
-   // We only care about viewing.
-   if ($op == 'view') {
+  // We need to override the original access callback
+  // in order to allow our module to revoke access.
+  // @see tripal/includes/tripal_entity.inc::tripal_entity_access line 488
+  // @code (excerpt from the above file)
+  // $results = module_invoke_all($entity_type . '_access', $entity, $op, $account);
+  // if (in_array(TRUE, $results)) {
+  //   return TRUE;
+  // }
+  // @endcode
+  $entity_info['TripalEntity']['access callback'] = 'private_biodata_access';
+}
 
-     if (is_numeric($entity)) {
-       $entity_id = $entity;
-       $entity_results = entity_load('TripalEntity', [$entity_id]);
-       $entity = $entity_results[$entity_id];
-     }
-     else {
-       $entity_id = $entity->id;
-     }
+/**
+ * Implements hook_menu_alter().
+ */
+function private_biodata_menu_alter(&$items) {
 
-     // We also only care if this entity is private...
-     $is_private = db_query('SELECT private FROM {private_biodata}
-       WHERE entity_id=:id',
-       [':id' => $entity_id])->fetchField();
+  // We also need to alter the menu to ensure it uses our new callback.
+  $items['bio_data/%']['access callback'] = 'private_biodata_access';
+  $items['bio_data/%/view']['access callback'] = 'private_biodata_access';
+}
 
-      // If we have it marked as private...
-     if ($is_private) {
-       // then return the custom permission provided by this module.
-       return user_access('view private ' . $entity->bundle, $account);
-     }
-     // Otherwise, this entity should follow the typical Tripal permissions.
-     else {
-       // Ensure that the current user has the
-       // 'view [bundle_name]' permission which was set-up by core Tripal.
-       return user_access('view ' . $entity->bundle, $account);
-     }
-   }
- }
+/**
+ * Checks access permissions for a given entity.
+ *
+ * This function is set for TripalEntity access checking in the
+ * tripal_entity_info() under the 'access callback' element.
+ *
+ * @param $op
+ *   The operation. One of: create, view, edit, delete.
+ * @param $entity
+ *   The entity to check access for.
+ * @param $account
+ *   The user account.
+ * @param $entity_type
+ *   The type of entity (will always be TripalEntity).
+ */
+function private_biodata_access($op, $entity = NULL, $account = NULL, $entity_type = NULL) {
+  global $user;
+  $cache = &drupal_static(__FUNCTION__, NULL);
+
+  if (!isset($account)) {
+    $account = $user;
+  }
+
+  if (is_object($entity) && is_a($entity, 'TripalEntity')) {
+    $bundle_name = $entity->bundle;
+    $entity_id = $entity->id;
+  }
+  elseif (is_numeric($entity)) {
+    $entity_id = $entity;
+    if (!isset($cache)) {
+      $cache = cache_get("tripal_entity_access_cache");
+      if (isset($cache->data)) {
+        $cache = $cache->data;
+      }
+    }
+
+    if (empty($cache)) {
+      $cache = [];
+    }
+
+    if (isset($cache[$entity])) {
+      $bundle_name = $cache[$entity];
+    }
+    else {
+      $sql = 'SELECT {bundle} FROM tripal_entity WHERE id = :id';
+      $bundle_name = db_query($sql, [':id' => $entity])->fetchField();
+      $cache[$entity] = $bundle_name;
+      cache_set("tripal_entity_access_cache", $cache);
+    }
+  }
+  else {
+    return FALSE;
+  }
+
+  if (!$entity_type) {
+    if (is_object($entity)) {
+      $entity_type = $entity->type;
+    }
+    else {
+      $entity_type = 'TripalEntity';
+    }
+  }
+
+  // --- What's different from Tripal Core -------------------------------
+  // The bit above is also done in Tripal Core but we need the variables
+  // so we had to duplicate it. The code will not be run 2X because we can
+  // pass the already determined values into tripal_entity_access below.
+  // We only care about viewing.
+  if ($op == 'view') {
+
+    // We also only care if this entity is private...
+    $is_private = db_query('SELECT private FROM {private_biodata}
+      WHERE entity_id=:id',
+      [':id' => $entity_id])->fetchField();
+
+     // If we have it marked as private...
+    if ($is_private) {
+      // then return the custom permission provided by this module.
+      return user_access('view private ' . $bundle_name, $account);
+    }
+  }
+
+  // If we reach here then this is not a situation this module cares about.
+  // as such, defer to Tripal Core.
+  return tripal_entity_access($op, $entity, $account, $entity_type);
+  // ---------------------------------------------------------------------
+}

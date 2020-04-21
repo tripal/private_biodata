@@ -38,6 +38,9 @@ class PermissionsTest extends TripalTestCase {
   public function testPrivateBiodataTripalEntityAccess() {
     $faker = \Faker\Factory::create();
 
+    // Supress tripal errors
+    putenv("TRIPAL_SUPPRESS_ERRORS=TRUE");
+
     // -- CREATE THE ENTITY.
     // All bundle names are bio_data_##. Content types are created on install
     // of tripal_chado and thus all sites should have them available.
@@ -82,14 +85,17 @@ class PermissionsTest extends TripalTestCase {
     $user_can_uid = $user_can->uid;
 
     // -- TEST WITH ENTITY ID
-    $can_access = private_biodata_TripalEntity_access($entity->id, 'view', $user_can);
+    $can_access = private_biodata_access('view', $entity->id, $user_can);
     $this->assertTrue($can_access,
       "Should be able to pass in the entity ID to confirm access.");
 
     // -- TEST WITH ENTITY OBJECT
-    $can_access = private_biodata_TripalEntity_access($entity, 'view', $user_can);
+    $can_access = private_biodata_access('view', $entity, $user_can);
     $this->assertTrue($can_access,
       "Should be able to pass in the entity ID to confirm access.");
+
+    // Unset tripal errors suppression
+    putenv("TRIPAL_SUPPRESS_ERRORS");
   }
 
   /**
@@ -102,6 +108,9 @@ class PermissionsTest extends TripalTestCase {
    */
   public function testPermissionsForUser() {
     $faker = \Faker\Factory::create();
+
+    // Supress tripal errors
+    putenv("TRIPAL_SUPPRESS_ERRORS=TRUE");
 
     // Create organism entity for testing.
     $bundle_name = 'bio_data_2';
@@ -194,7 +203,7 @@ class PermissionsTest extends TripalTestCase {
       "The roles that shouldn't have the permission, does?");
 
     // Check that the user who should be able to access the content, can.
-    $result = tripal_entity_access('view', $entity, $user_can);
+    $result = private_biodata_access('view', $entity, $user_can);
     $this->assertTrue($result,
       "The current user does not have permission to view the private entity.");
 
@@ -205,9 +214,12 @@ class PermissionsTest extends TripalTestCase {
       $all_roles_with_permission
     );
     if ($has_authenticated == FALSE) {
-      $result = tripal_entity_access($op, $entity, $user_canNOT);
+      $result = private_biodata_access($op, $entity, $user_canNOT);
       $this->assertFalse($result,
         "The current user does but shouldn't have permission to view the private entity.");
     }
+
+    // Unset tripal errors suppression
+    putenv("TRIPAL_SUPPRESS_ERRORS");
   }
 }

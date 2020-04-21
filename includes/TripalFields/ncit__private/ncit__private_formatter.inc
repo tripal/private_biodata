@@ -33,13 +33,6 @@ class ncit__private_formatter extends ChadoFieldFormatter {
 
     // If this page is private then...
     if ((isset($items[0]['is_private'])) && ($items[0]['is_private'] == TRUE)) {
-
-      // Return access if the current user should not be able to see it.
-      $bundle_name = $this->instance['bundle'];
-      if (user_access('view private ' . $bundle_name) === FALSE) {
-        return drupal_access_denied();
-      }
-
       // Otherwise, tell the user so they can change it if it shouldn't be.
       $element[0] = [
         '#prefix' => '<div class="messages warning">',
