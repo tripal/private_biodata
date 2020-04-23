@@ -6,7 +6,7 @@
  * Data:
  * Assumptions:
  */
-class ncit__private extends ChadoField {
+class ncit__private extends TripalField {
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS

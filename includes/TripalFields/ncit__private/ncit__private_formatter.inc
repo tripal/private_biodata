@@ -6,7 +6,7 @@
  * Display:
  * Configuration:
  */
-class ncit__private_formatter extends ChadoFieldFormatter {
+class ncit__private_formatter extends TripalFieldFormatter {
 
   // The default label for this field.
   public static $default_label = 'Private Tripal Content';

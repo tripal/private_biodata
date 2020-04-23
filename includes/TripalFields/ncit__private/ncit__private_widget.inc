@@ -7,7 +7,7 @@
  * Data:
  * Assumptions:
  */
-class ncit__private_widget extends ChadoFieldWidget {
+class ncit__private_widget extends TripalFieldWidget {
 
   // The default label for this field.
   public static $default_label = 'Keep Private';
