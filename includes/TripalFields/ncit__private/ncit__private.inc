@@ -75,7 +75,7 @@ class ncit__private extends TripalField {
     // is convenient for speed.  Fields that are slow should for loading
     // should have auto_attach set to FALSE so tha their values can be
     // attached asynchronously.
-    'auto_attach' => FALSE,
+    'auto_attach' => TRUE,
   ];
 
   // A boolean specifying that users should not be allowed to create
@@ -109,32 +109,18 @@ class ncit__private extends TripalField {
     ];
   }
 
-  /**
-   * @see ChadoField::query()
-   *
-   */
-  public function query($query, $condition) {
-  }
 
   /**
-   * @see ChadoField::queryOrder()
-   *
-   */
-  public function queryOrder($query, $order) {
-  }
-
-
-  /**
-   * @see ChadoField::elementInfo()
+   * @see TripalField::elementInfo()
    *
    */
   public function elementInfo() {
     $field_term = $this->getFieldTermID();
     return [
       $field_term => [
-        'operations' => ['eq', 'ne', 'contains', 'starts'],
-        'sortable' => TRUE,
-        'searchable' => TRUE,
+        'operations' => [],
+        'sortable' => FALSE,
+        'searchable' => FALSE,
       ],
     ];
   }
