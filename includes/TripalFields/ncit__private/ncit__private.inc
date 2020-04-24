@@ -1,10 +1,7 @@
 <?php
 /**
  * @class
- * Purpose:
- *
- * Data:
- * Assumptions:
+ * Purpose: Make some Tripal Content pages private.
  */
 class ncit__private extends TripalField {
 
@@ -38,7 +35,7 @@ class ncit__private extends TripalField {
   // Drupal will automatically change these settings for all fields.
   // Once instances exist for a field type then these settings cannot be
   // changed.
-  public static $default_settings = array(
+  public static $default_settings = [
     'storage' => 'field_chado_storage',
      // It is expected that all fields set a 'value' in the load() function.
      // In many cases, the value may be an associative array of key/value pairs.
@@ -46,15 +43,15 @@ class ncit__private extends TripalField {
      // be a controlled vocabulary term (e.g. rdfs:type). Keys in the load()
      // function that are supported by the query() function should be
      // listed here.
-     'searchable_keys' => array(),
-  );
+     'searchable_keys' => [],
+  ];
 
   // Indicates the download formats for this field.  The list must be the
   // name of a child class of the TripalFieldDownloader.
-  public static $download_formatters = array(
+  public static $download_formatters = [
      'TripalTabDownloader',
      'TripalCSVDownloader',
-  );
+  ];
 
   // Provide a list of instance specific settings. These can be access within
   // the instanceSettingsForm.  When the instanceSettingsForm is submitted
@@ -63,7 +60,7 @@ class ncit__private extends TripalField {
   // If you override this variable in a child class be sure to replicate the
   // term_name, term_vocab, term_accession and term_fixed keys as these are
   // required for all TripalFields.
-  public static $default_instance_settings = array(
+  public static $default_instance_settings = [
     // The DATABASE name, as it appears in chado.db.  This also builds the link-out url.  In most cases this will simply be the CV name.  In some cases (EDAM) this will be the SUBONTOLOGY.
     'term_vocabulary' => 'local',
     // The name of the term.
@@ -79,10 +76,7 @@ class ncit__private extends TripalField {
     // should have auto_attach set to FALSE so tha their values can be
     // attached asynchronously.
     'auto_attach' => FALSE,
-    'chado_table' => NULL,
-    'chado_column' => NULL,
-    'base_table' => NULL,
-  );
+  ];
 
   // A boolean specifying that users should not be allowed to create
   // fields and instances of this field type through the UI. Such
@@ -136,13 +130,13 @@ class ncit__private extends TripalField {
    */
   public function elementInfo() {
     $field_term = $this->getFieldTermID();
-    return array(
-      $field_term => array(
-        'operations' => array('eq', 'ne', 'contains', 'starts'),
+    return [
+      $field_term => [
+        'operations' => ['eq', 'ne', 'contains', 'starts'],
         'sortable' => TRUE,
         'searchable' => TRUE,
-      ),
-    );
+      ],
+    ];
   }
 
 }

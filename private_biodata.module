@@ -14,10 +14,10 @@ function private_biodata_permission() {
    // Add 'View Private' permissions for each content type.
    $bundles = tripal_get_content_types();
    foreach ($bundles as $bundle) {
-     $permissions['view private ' . $bundle->name] = array(
-       'title' => t('%label: View Private Content', array('%label' => $bundle->label)),
-       'description' => t('Allow the user to view private %label content. Content is indicated to be private using the "Private Tripal Content" field.', array('%label' => $bundle->label)),
-     );
+     $permissions['view private ' . $bundle->name] = [
+       'title' => t('%label: View Private Content', ['%label' => $bundle->label]),
+       'description' => t('Allow the user to view private %label content. Content is indicated to be private using the "Private Tripal Content" field.', ['%label' => $bundle->label]),
+     ];
    }
 
    return $permissions;

@@ -18,28 +18,28 @@
  *   developing call tripal_refresh_bundle_fields() for the specific bundle.
  */
 function private_biodata_bundle_fields_info($entity_type, $bundle) {
-  $fields = array();
+  $fields = [];
 
   // First add my term.
-  tripal_insert_cvterm(array(
+  tripal_insert_cvterm([
     'id' => 'NCIT:C54104',
     'name' => 'Private',
     'cv_name' => 'ncit',
     'definition' => 'Not public; kept secret or restricted.',
-  ));
+  ]);
 
   // Then describe the field defined by that term.
   $field_name = 'ncit__private';
   $field_type = 'ncit__private';
-  $fields[$field_name] = array(
+  $fields[$field_name] = [
     'field_name' => $field_name,
     'type' => $field_type,
     'cardinality' => 1,
     'locked' => FALSE,
-    'storage' => array(
+    'storage' => [
       'type' => 'tripal_no_storage',
-    ),
-  );
+    ],
+  ];
 
   return $fields;
 }
@@ -55,36 +55,36 @@ function private_biodata_bundle_fields_info($entity_type, $bundle) {
  *   An array of field instance definitions.
  */
 function private_biodata_bundle_instances_info($entity_type, $bundle) {
-  $instances = array();
+  $instances = [];
 
   $field_name = 'ncit__private';
   $field_type = 'ncit__private';
-  $instances[$field_name] =  array(
+  $instances[$field_name] =  [
     'field_name' => $field_name,
     'entity_type' => $entity_type,
     'bundle' => $bundle->name,
     'label' => 'Keep Private',
     'description' => 'Check this checkbox to keep the current page private.',
     'required' => FALSE,
-    'settings' => array(
+    'settings' => [
       'term_vocabulary' => 'NCIT',
       'term_name' => 'Private',
       'term_accession' => 'C54104',
       'auto_attach' => TRUE,
       'base_table' => $bundle->data_table,
-    ),
-    'widget' => array(
+    ],
+    'widget' => [
       'type' => 'ncit__private_widget',
-      'settings' => array(),
-    ),
-    'display' => array(
-      'default' => array(
+      'settings' => [],
+    ],
+    'display' => [
+      'default' => [
         'label' => 'hidden',
         'type' => 'ncit__private_formatter',
-        'settings' => array(),
-      ),
-    ),
-  );
+        'settings' => [],
+      ],
+    ],
+  ];
 
   return $instances;
 }

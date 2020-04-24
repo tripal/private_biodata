@@ -1,11 +1,13 @@
 <?php
 /**
  * @class
- * Purpose:
+ * Purpose: Allow users to set whether a particular page should be private.
  *
- * Allowing edit?
- * Data:
- * Assumptions:
+ * Allowing edit? Yes
+ * Data: Saved in public.private_biodata
+ *
+ * Note: Chado was not chosen as the storage backend because we didn't want this
+ *   to show up as a chado property.
  */
 class ncit__private_widget extends TripalFieldWidget {
 
@@ -13,7 +15,7 @@ class ncit__private_widget extends TripalFieldWidget {
   public static $default_label = 'Keep Private';
 
   // The list of field types for which this formatter is appropriate.
-  public static $field_types = array('ncit__private');
+  public static $field_types = ['ncit__private'];
 
 
   /**
@@ -28,7 +30,7 @@ class ncit__private_widget extends TripalFieldWidget {
     $default_value = (isset($items[0]['is_private'])) ? $items[0]['is_private'] : FALSE;
 
     $icon_path = drupal_get_path('module', 'private_biodata') . '/includes/TripalFields/ncit__private/iconfinder_102_111044.png';
-    $lock_img = theme('image', array('path' => $icon_path));
+    $lock_img = theme('image', ['path' => $icon_path]);
 
     $widget['is_private'] = [
       '#type' => 'checkbox',
